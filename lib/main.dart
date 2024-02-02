@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/pages/sign_up.dart';
-import 'package:news_app/pages/splash_page.dart';
+import 'package:news_app/pages/login_page.dart';
+// import 'package:news_app/pages/sign_up.dart';
+// import 'package:news_app/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
-      home: SignUpPage(),
+      home: LoginPage(),
     );
   }
 }
