@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/pages/sign_up.dart';
 import 'package:news_app/pages/splash_page.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: SignUpPage(),
     );
   }
 }
