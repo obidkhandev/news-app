@@ -5,6 +5,8 @@ import 'package:news_app/compotations/my_big_divider.dart';
 import 'package:news_app/compotations/my_button.dart';
 import 'package:news_app/compotations/my_social_media.dart';
 import 'package:news_app/compotations/my_text_field.dart';
+import 'package:news_app/data/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final Function() onTap;
@@ -19,6 +21,24 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool eyes = true;
+
+  void signIng() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.singInWithEmailandPassword(
+          emailController.text, passwordController.text);
+    } catch (error) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           TextField(
             obscureText: eyes,
             obscuringCharacter: "*",
+            controller: passwordController,
             decoration: InputDecoration(
               hintText: "Password",
               hintStyle: TextStyle(color: Colors.grey),
@@ -83,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           SizedBox(height: size.height * 0.05),
-          const MyButton(text: "Sign In"),
+          MyButton(text: "Sign In",press: signIng,),
           SizedBox(height: size.height * 0.05),
           const MyBigDivider(dividerWith: 26),
           SizedBox(height: size.height * 0.04),

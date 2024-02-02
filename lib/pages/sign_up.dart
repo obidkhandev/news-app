@@ -28,7 +28,9 @@ class _SignUpPageState extends State<SignUpPage> {
     final authService = Provider.of<AuthService>(context, listen: false);
     try {
       await authService.singUpWithEmailandPassword(
+        userNameController.text,
         emailController.text,
+        phoneNumberController.text,
         passwordController.text,
       );
     } catch (e) {

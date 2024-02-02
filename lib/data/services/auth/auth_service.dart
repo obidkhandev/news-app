@@ -33,7 +33,7 @@ class AuthService extends ChangeNotifier {
 
   // create a new user
   Future<UserCredential> singUpWithEmailandPassword(
-      String email, password) async {
+       String userName, String email, String phoneNumber,String password,) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
@@ -44,7 +44,10 @@ class AuthService extends ChangeNotifier {
       // after  creating the user, create a new document for the user in the users collection
       _firestore.collection("users").doc(userCredential.user!.uid).set({
         "uid": userCredential.user!.uid,
+        "userName": userName,
+        "phoneNumber": phoneNumber,
         "email": email,
+        "password":password,
       });
       return userCredential;
     } on FirebaseAuthException catch (e) {
