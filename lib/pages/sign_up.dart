@@ -5,9 +5,12 @@ import 'package:news_app/compotations/my_button.dart';
 import 'package:news_app/compotations/my_circle.dart';
 import 'package:news_app/compotations/my_social_media.dart';
 import 'package:news_app/compotations/my_text_field.dart';
+import 'package:news_app/data/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final Function() onTap;
+  const SignUpPage({super.key, required this.onTap});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -19,6 +22,26 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool iconCheck = false;
+
+  void singUp() async {
+    // get auth service
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.singUpWithEmailandPassword(
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +107,9 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
           ),
           const SizedBox(height: 20),
-          const MyButton(
+          MyButton(
             text: "Sign Up",
+            press: singUp,
           ),
           const SizedBox(height: 15),
           const MyBigDivider(),
@@ -103,10 +127,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               MySocialMedia(
-                  child: Image.network(
-                "https://avatars.mds.yandex.net/i?id=4343b1ace987c26c40136d65af018172c411c0b5-8410613-images-thumbs&n=13",
-                height: 25,
-              ),),
+                child: Image.network(
+                  "https://avatars.mds.yandex.net/i?id=4343b1ace987c26c40136d65af018172c411c0b5-8410613-images-thumbs&n=13",
+                  height: 25,
+                ),
+              ),
               MySocialMedia(
                 child: Image.network(
                   "https://avatars.mds.yandex.net/i?id=b5b7c5083c6e884c060ea4e4765aa9b55953efa3-5232594-images-thumbs&n=13",
@@ -119,25 +144,28 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
           ),
           const SizedBox(height: 20),
-          RichText(
-            textAlign: TextAlign.center,
-            text: const TextSpan(
-              children: [
-                TextSpan(
-                  text: "By signing up to News24 you are accepting our\n",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                  ),
-                ),
-                TextSpan(
-                  text: "Terms & Conditions",
-                  style: TextStyle(
+          GestureDetector(
+            onTap: widget.onTap,
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: "By signing up to News24 you are accepting our\n",
+                    style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+                      fontSize: 14,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "Terms & Conditions",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

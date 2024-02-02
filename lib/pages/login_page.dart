@@ -7,7 +7,8 @@ import 'package:news_app/compotations/my_social_media.dart';
 import 'package:news_app/compotations/my_text_field.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final Function() onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -113,17 +114,20 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           SizedBox(height: size.height * 0.04),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Don't have an account?",
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(width: 5),
-              Text(
-                "Register",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              const SizedBox(width: 5),
+              GestureDetector(
+                onTap: widget.onTap,
+                child: Text(
+                  "Register",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
               ),
             ],
           )

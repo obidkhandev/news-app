@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:news_app/compotations/compotations.dart';
-import 'package:news_app/pages/sign_up.dart';
+import 'package:news_app/data/services/auth/auth_gate.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const SignUpPage();
+            return const AuthGate();
           },
         ),
       );
