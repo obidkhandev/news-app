@@ -42,10 +42,28 @@ class _HomePageState extends State<HomePage> {
     title = post.data()!.values.last;
   }
 
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        currentIndex: currentIndex,
+        onTap: (value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.ads_click), label: "Ads"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add post"),
+          BottomNavigationBarItem(icon: Icon(Icons.poll), label: "Poll"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 40),
         child: Column(
@@ -54,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             const CategoryList(),
             SizedBox(
               width: double.infinity,
-              height: size.height * 0.7,
+              height: size.height * 0.725,
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 children: [
