@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class MyImages extends StatelessWidget {
   final double borderBottom;
+  final String image;
   const MyImages({
     super.key,
     this.borderBottom = 10,
+    this.image = "assets/i2.png"
   });
 
   @override
@@ -19,9 +21,9 @@ class MyImages extends StatelessWidget {
           topLeft: const Radius.circular(10),
           topRight: const Radius.circular(10),
         ),
-        image: const DecorationImage(
+        image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage("assets/i2.png"),
+          image: AssetImage(image),
         ),
       ),
     );

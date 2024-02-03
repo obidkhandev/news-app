@@ -6,6 +6,7 @@ import 'package:news_app/compotations/my_image.dart';
 import 'package:news_app/compotations/poster_chart.dart';
 import 'package:news_app/data/services/auth/auth_service.dart';
 import 'package:news_app/data/services/auth/poster_service.dart';
+import 'package:news_app/pages/new_descriptions.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,16 +31,20 @@ class _HomePageState extends State<HomePage> {
     _post.savePost();
   }
 
-  void getPost() async {
+  getPost() async {
     final post =
         await _firestore.collection("poster").doc("IeAxbZJnnlWg57glQzR9").get();
-    poster = post.data()!.values.first;
+    setState(() {
+      poster = post.data()!.values.first;
+    });
   }
 
   getTitle() async {
     final post =
         await _firestore.collection("poster").doc("IeAxbZJnnlWg57glQzR9").get();
-    title = post.data()!.values.last;
+    setState(() {
+      title = post.data()!.values.last;
+    });
   }
 
   int currentIndex = 0;
@@ -47,23 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        currentIndex: currentIndex,
-        onTap: (value) {
-          setState(() {
-            currentIndex = value;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.ads_click), label: "Ads"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add post"),
-          BottomNavigationBarItem(icon: Icon(Icons.poll), label: "Poll"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
-        ],
-      ),
+      bottomNavigationBar: myBottomNavbar(),
       body: Padding(
         padding: const EdgeInsets.only(top: 40),
         child: Column(
@@ -76,7 +65,18 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 children: [
-                  const MyImages(),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const NewsDescriptions();
+                            },
+                          ),
+                        );
+                      },
+                      child: const MyImages()),
                   Container(
                     height: 200,
                     margin: const EdgeInsets.symmetric(vertical: 12),
@@ -109,6 +109,26 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  BottomNavigationBar myBottomNavbar() {
+    return BottomNavigationBar(
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
+      currentIndex: currentIndex,
+      onTap: (value) {
+        setState(() {
+          currentIndex = value;
+        });
+      },
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        BottomNavigationBarItem(icon: Icon(Icons.ads_click), label: "Ads"),
+        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add post"),
+        BottomNavigationBarItem(icon: Icon(Icons.poll), label: "Poll"),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
+      ],
+    );
+  }
+
   Row buildAppBar() {
     return Row(
       children: [
@@ -122,10 +142,10 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(width: 10),
         const Icon(Icons.location_on),
-        const Text("G.t Road,Kolkato"),
+        GestureDetector(onTap: getPost, child: Text("G.t Road,Kolkato")),
         const Icon(Icons.arrow_drop_down),
         const Spacer(),
-        const Coins(),
+        GestureDetector(onTap: getTitle, child: Coins()),
         const SizedBox(width: 15),
         const Icon(
           Icons.notifications,
