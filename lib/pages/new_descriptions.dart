@@ -3,7 +3,6 @@ import 'package:news_app/compotations/article.dart';
 import 'package:news_app/compotations/icon_and_text.dart';
 import 'package:news_app/compotations/my_app_bar.dart';
 import 'package:news_app/compotations/profile_info.dart';
-// import 'package:news_app/compotations/my_image.dart';
 
 class NewsDescriptions extends StatefulWidget {
   const NewsDescriptions({super.key});

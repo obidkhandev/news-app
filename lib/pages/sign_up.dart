@@ -22,7 +22,6 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool iconCheck = false;
-
   void singUp() async {
     // get auth service
     final authService = Provider.of<AuthService>(context, listen: false);
